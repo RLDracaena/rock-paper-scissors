@@ -1,122 +1,165 @@
-//get computer choice
+
+
+
+//selectors
+const roundContainer = document.querySelector(".round-number");
+const startButton = document.querySelector(".play");
+const masterBoard = document.querySelector(".master-game-board")
+const winningPlayer = document.querySelector(".winner");
+const playAgain = document.querySelector(".play-again-button-container")
+const computerScoreContainer = document.querySelector(".computer-score");
+const humanScoreContainer = document.querySelector(".human-score");
+const info = document.querySelector(".info")
+const humanChoiceContainer = document.querySelector(".human-choice");
+const computerChoiceContainer = document.querySelector(".computer-choice");
+const resetButton = document.querySelector(".play-again")
+
+
+//Start game
+startButton.addEventListener("click", startGame);
+
+winningPlayer.innerText = "";
+
+function startGame() {
+    masterBoard.classList.remove("hidden");
+    startButton.classList.add("hidden");
+    info.classList.add("hidden")
+    roundNumber = 1;
+    roundContainer.innerText = "Round: " + roundNumber
+    winningPlayer.innerText = "";
+    humanScore = 0;
+    humanScoreContainer.innerText = "Player: " + humanScore;
+    computerScore = 0
+    computerScoreContainer.innerText = "Computer: " + computerScore;
+    humanChoiceContainer.innerText = ""
+    computerChoiceContainer.innerText = ""
+
+}
+
+
 function getComputerChoice() {
-
-//get a random number between 1 and 3
-    let randomNumber = Math.floor(Math.random() * 3) + 1
-
-//assign rock, paper and scissors to each number
-    let computerChoice;
-    switch (randomNumber) {
-        case 1: 
-        computerChoice = "rock";
-        break;
-        case 2:
-        computerChoice = "paper";
-        break;
-        case 3:
-        computerChoice = "scissors";    
-    }
-
-//return the computer's choice
+    let choices = ["Rock", "Paper", "Scissors"];
+    let randomNumber = Math.floor(Math.random() * choices.length) 
+    let computerChoice = choices[randomNumber]
     return computerChoice;
-}
-
-//get the player's choice
-function getHumanChoice() {
-
-//prompt the player to give choice
-    let humanChoice = prompt("Rock, Paper or Scissors: Please choose one!").toLowerCase()
-    while (humanChoice != "rock" && humanChoice != "paper" && humanChoice != "scissors") {
-        humanChoice = prompt("Rock, Paper or Scissors: Please choose one!").toLowerCase()
     }
 
-//return the player's choice
-    return humanChoice;
-}
-
-
-
-function playGame() {
-//the current round number (of 5 rounds)
-let roundNumber = 1;
-
-//score board
+// get human choice via buttons
+let computerChoice;
 let humanScore = 0;
 let computerScore = 0;
-let winner;
+let roundNumber = 0;
 
-
-//play a round
-function playRound(humanChoice, computerChoice) {
-    console.log("Round: " + roundNumber);
-    humanChoice = getHumanChoice();
-    computerChoice = getComputerChoice();
-
+const rockButton = document.querySelector(".rockbtn")
+rockButton.addEventListener("click", () => 
+    {playRound("Rock", computerChoice)});
     
+const paperButton = document.querySelector(".paperbtn")
+paperButton.addEventListener("click", () => 
+    {playRound("Paper", computerChoice)});
+    
+const scissorsButton = document.querySelector(".scissorsbtn")
+scissorsButton.addEventListener("click", () => 
+    {playRound("Scissors", computerChoice)});
+
+
+// play a round
+function playRound(humanChoice, computerChoice) {
+
+    let winner;
+    computerChoice = getComputerChoice();
     console.log(humanChoice + " VS " + computerChoice)
 
-//compare the choices
+    // fill the human and computer choice containers
+
+    if (humanChoice === "Rock") {humanChoiceContainer.innerText = "Rock"}
+    else if (humanChoice === "Paper") {humanChoiceContainer.innerText = "Paper"}
+    else if (humanChoice === "Scissors") {humanChoiceContainer.innerText = "Scissors"}
+
+
+    computerChoiceContainer.innerText = computerChoice;
+
+    //fill the scores
  
-    if (humanChoice === "rock" && computerChoice === "paper") {
+    humanScoreContainer.innerText = "Player: " + humanScore;
+    computerScoreContainer.innerText = "Computer: " + computerScore;
+
+    //compare the choices
+ 
+    if (humanChoice === "Rock" && computerChoice === "Paper") {
         winner = "You Lose! " + computerChoice + " beats " + humanChoice
     }
-    else if (humanChoice === "rock" && computerChoice === "scissors") {
+    else if (humanChoice === "Rock" && computerChoice === "Scissors") {
         winner = "You Win! " + humanChoice + " beats " + computerChoice
     }
-    else if (humanChoice === "paper" && computerChoice === "scissors") {
+    else if (humanChoice === "Paper" && computerChoice === "Scissors") {
         winner = "You Lose! " + computerChoice + " beats " + humanChoice
     }
-    else if (humanChoice === "paper" && computerChoice === "rock") {
+    else if (humanChoice === "Paper" && computerChoice === "Rock") {
         winner = "You Win! " + humanChoice + " beats " + computerChoice
     }
-    else if (humanChoice === "scissors" && computerChoice === "rock") {
+    else if (humanChoice === "Scissors" && computerChoice === "Rock") {
         winner = "You Lose! " + computerChoice + " beats " + humanChoice
     }
-    else if (humanChoice === "scissors" && computerChoice === "paper") {
+    else if (humanChoice === "Scissors" && computerChoice === "Paper") {
         winner = "You Win! " + humanChoice + " beats " + computerChoice
     } 
     else {
         winner = "It's a draw!"
     }
 
-//return the winner
+    //return the winner
     console.log(winner)
+    winningPlayer.innerText = winner;
 
-//decide the scores
+    //decide the scores
     if (winner === "You Win! " + humanChoice + " beats " + computerChoice) {
-        humanScore++;
+        humanScore = humanScore + 1;
+        humanScoreContainer.innerText = "Player: " + humanScore;
+        winningPlayer.style.color = "green"
     }
     else if (winner === "You Lose! " + computerChoice + " beats " + humanChoice) {
-        computerScore++;
+        computerScore = computerScore + 1;
+        computerScoreContainer.innerText = "Computer: " + computerScore;
+        winningPlayer.style.color = "darkred"
     }
     else if (winner === "It's a draw!") {
         computerScore = computerScore;
         humanScore = humanScore;
+        winningPlayer.style.color = "lightblue"
     }
 
     console.log("Player: "+ humanScore, "Computer: " + computerScore);
+
+    roundNumber++
+    roundContainer.innerText = "Round: " + roundNumber
+
+    if (humanScore === 5 || computerScore === 5) {
+    if (humanScore === 5) {winningPlayer.innerText = "You Win!"
+        winningPlayer.style.color = "green"
+    }
+    else if (computerScore === 5){winningPlayer.innerText = "You Lose!"
+        winningPlayer.style.color = "darkred"
+    }
+    else if (computerScore === 5 && humanScore === 5) {winningPlayer.innerText = "It's a draw!"
+        winningPlayer.style.color = "lightblue"
+    } 
+
+    masterBoard.classList.add("hidden")
+    playAgain.classList.remove("hidden")
+
+    }
 }
 
-// play 5 rounds of the game
-while (roundNumber < 6) {
-    playRound();
-    roundNumber++;
-}
+resetButton.addEventListener("click", resetGameBoard)
 
-//decide the overall winner after 5 rounds
-if (humanScore < computerScore) {
-    console.log("The computer wins the game!");
-}
-else if (humanScore > computerScore) {
-    console.log("You win the game!");
-}
-else {
-    console.log("It's a draw!");
-}
-
+function resetGameBoard() {
+    startButton.classList.remove("hidden");
+    info.classList.remove("hidden")
+    playAgain.classList.add("hidden")
+    winningPlayer.innerText = "";
+    humanChoiceContainer.innerText = ""
+    computerChoiceContainer.innerText = ""
 
 }
-
-// play the game
-playGame()
 

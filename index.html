@@ -3,9 +3,63 @@
     <head>
         <meta charset = "UTF-8">
         <title>Rock Paper Scissors</title>
-        <script src = "script.js"></script>
+        <script src = "script.js" defer></script>
         <link rel = "stylesheet" href = "style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    </head>
         <body>
+            <div class = "border">
+
+            <h1 class = "heading">Rock, Paper, Scissors</h1>
+            <div class = "info">
+                <p>First to win 5 rounds is the winner!</p>
+            </div>
+            <div class = "play-button-container choices-container">
+               <button class = "play choice ">Play Game</button>
+            </div>
+            <div class = "game-winner winner">
+                <p>You Win!</p>
+             </div>
+             <div class = "play-again-button-container choices-container hidden">
+                <button class = "play-again choice play">Play Again?</button>
+             </div>
+
+        <div class = "master-game-board hidden">
+            <div class = "choices-container">
+                <button class = "rockbtn choice">Rock</button>
+                <button class = "paperbtn choice">Paper</button>
+                <button class = "scissorsbtn choice">Scissors</button>
+            </div>
+
+            <div class = "round-number">
+                Round Number
+            </div>
+            <div class = "game-board ">
+                <div class = "human-choice">
+                    
+                </div>
+                <div class = "vs">
+                    Vs.
+                </div>
+                <div class = "computer-choice">
+                    
+                </div>
+            </div>
+            <!-- <div class = "winner">
+
+            </div> -->
+            <div class = "scores">
+                <div class = "human-score">
+                    Player:
+                </div>
+                <div class = "computer-score">
+                    Computer:
+                </div>
+            </div>
+        </div>
+</div>
 
         </body>
     </head>
